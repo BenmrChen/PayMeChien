@@ -5,7 +5,7 @@
 <!-- 傳送資料到母模版(該模版內的section被命名為title) 傳送的資料為$title -->
 
 @section('content')
-<!-- 傳送資料到母模版(該模版內的section被命名為content) 傳送的資料為被section和endsection夾起來的部份 -->
+<!-- 傳送資料到母模版(該模版內的section被命名為content) 傳送的資料為被section和end.section夾起來的部份 -->
   <div class="container">
     <h1>{{ $title }}</h1>
     
@@ -29,7 +29,7 @@
         帳號類型: 
         <select name="type" id="">
           <option value="G">一般會員</option>
-          <option value="A">管理者</option>
+          <option value="A" disabled="disabled">管理者</option>
         </select>
       </label>
       {!! csrf_field() !!}

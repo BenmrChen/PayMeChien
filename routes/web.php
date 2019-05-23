@@ -13,6 +13,7 @@
 // 首頁
 Route::get('/', function () {
     return view('welcome');
+});
     Route::group(['prefix' =>'user'], function(){
         // User 驗證
         Route::group(['prefix' => 'auth'], function(){
@@ -41,4 +42,3 @@ Route::get('/', function () {
             Route::get('/modify', "UserProfileController@modifyProfile");
         });
     });
-});
