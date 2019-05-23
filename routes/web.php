@@ -31,7 +31,7 @@ Route::get('/', function () {
             // User 登出
             Route::get('/sign-out', 'UserAuthController@signOut');
         });
-        
+
         // User 個資相關
         Route::group(['prefix' => 'profile'], function(){
             // User 個資檢視
