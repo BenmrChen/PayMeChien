@@ -89,4 +89,66 @@ class UserAuthController extends Controller {
         return redirect('/user/auth/sign-in');
     }
 
+    // 登入
+    public function signInPage(){
+        $binding = [
+            'title' => '登入',
+        ];
+        Return view('auth.signIn', $binding);
+    }
+
+    // 處理登入資料
+    public function signInProcess(){
+        $input = request()->All();
+
+        $rules = [
+            'email' =>[
+                'required',
+                'max:150',
+                'email',
+            ],
+            'password' =>[
+                'required',
+                'min:6',
+            ],
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            return redirect('/user/auth/sign-in')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $User = User::where('email', $input['email'])->firstOrFail();
+
+        $is_password_correct = Hash::check($input['password'], $User->password);
+
+        if (!$is_password_correct) {
+         $error_message = [
+             'msg'=> [
+                 '密碼驗證錯誤',
+             ],
+         ];
+         return redirect('/user/auth/sign-in')
+             ->withErrors($error_message)
+             ->withInput();
+        }
+
+        // session 紀錄會員編號
+        session()->put('user_id', $User->id);
+
+        // 重新導向到原先使用者造訪頁面，若無，則導回首頁
+        return redirect()->intended('/');
+    }
+
+    // 處理登出資料
+    public function signOut(){
+        // 清除 session
+        session()->forget('user_id');
+
+        // 重新導向回首頁
+        return redirect('/');
+    }
 }
