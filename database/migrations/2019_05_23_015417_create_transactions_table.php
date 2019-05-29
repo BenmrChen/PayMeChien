@@ -29,7 +29,7 @@ class CreateTransactionsTable extends Migration
             // 付款狀態，已付=T;未付=F
             $table->string('payment_status','1' )->default('F');
             // 匯款後5碼
-            $table->integer('payment_number');
+            $table->integer('payment_number')->nullable();
             // 付款核對，已核對=T;未核對=F; 這邊先採信任原則，不另作核對，預設為T
             $table->string('payment_check', '1')->default('T');
             // 建立/更新時間

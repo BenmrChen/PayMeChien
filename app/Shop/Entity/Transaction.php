@@ -24,4 +24,11 @@ class Transaction extends Model
         "payment_number",
         "payment_check",
     ];
+
+
+
+    // 設定關聯資料 意即這個Model和Service的Model有關係
+    public function Service() {
+        return $this->hasOne('App\Shop\Entity\Service', 'id', 'service_id');
+    }
 }

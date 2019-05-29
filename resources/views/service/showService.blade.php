@@ -44,6 +44,7 @@
                                 購買
                             </button>
                             {{ csrf_field() }}
+
                         </form>
                     </td>
                 </tr>

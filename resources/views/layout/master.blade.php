@@ -9,13 +9,15 @@
 <header>
     <ul class="nav">
         @if(session()->has('user_id'))
-            <a href="/user/auth/sign-out">登出</a>
             <a href="/">首頁</a>
+            <a href="/user/auth/sign-out">登出</a>
             <a href="/service">商品服務列表</a>
+            <a href="/transaction">交易紀錄</a>
+            <a href="/transaction/payment">付款</a>
         @else
+            <a href="/">首頁</a>
             <a href="/user/auth/sign-in">登入</a>
             <a href="/user/auth/sign-up">註冊</a>
-            <a href="/">首頁</a>
             <a href="/service">商品服務列表</a>
         @endif
     </ul>

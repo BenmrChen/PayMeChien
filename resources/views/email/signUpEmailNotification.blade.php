@@ -10,6 +10,7 @@
 <body>
 
 <h1>恭喜 {{ $nickname }} 您已經成功註冊「PayMeChien」</h1>
+<p>請點選本<a href="paymechien.test/user/auth/sign-in">連結</a>以登入並進行訂閱程序，謝謝。</p>
 
 </body>
 </html>

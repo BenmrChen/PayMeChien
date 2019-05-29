@@ -8,6 +8,7 @@ use Validator;
 use Hash;
 use App\Shop\Entity\User;
 use Mail;
+use App\Shop\Entity\Transaction;
 
 
 class UserAuthController extends Controller {
@@ -84,9 +85,11 @@ class UserAuthController extends Controller {
           // 郵件主旨
           $mail->subject('恭喜您，已成功註冊「PayMeChien」');
         });
-
+        $message = [
+            'msg' => '恭喜您已成功註冊! 您將會收到一封確認郵件，謝謝。'];
         //重新導向到登入頁
-        return redirect('/user/auth/sign-in');
+        return redirect('/user/auth/sign-in')
+            ->withErrors($message);
     }
 
     // 登入
@@ -139,7 +142,13 @@ class UserAuthController extends Controller {
         // session 紀錄會員編號
         session()->put('user_id', $User->id);
 
-        // 重新導向到原先使用者造訪頁面，若無，則導回首頁
+        // 若User有買東西還沒付款 則導向付款頁面; 否則重新導向到原先使用者造訪頁面，若無，則導回首頁
+        $Transaction = Transaction::where('user_id', $User->id)
+                                    ->where('payment_status', 'F')
+                                    ->first();
+        if (isset($Transaction->id)) {
+            return redirect("/transaction/payment");
+        }
         return redirect()->intended('/');
     }
 

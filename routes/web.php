@@ -54,9 +54,12 @@ Route::group(['prefix' => 'service'], function () {
        Route::get('/', "ServiceController@serviceItemPage");
 
        // 購買服務單品
-       Route::get('/buy', "ServiceController@serviceItemBuyProcess");
+       Route::post('/buy', "ServiceController@serviceItemBuyProcess");
     });
 });
 
-// 交易
-Route::get('/transaction', 'TransactionController@trasactionListPage');
+// 交易資料
+Route::get('/transaction', 'TransactionController@transactionListPage');
+// 付款確認
+Route::get('/transaction/payment', 'TransactionController@confirmPayment');
+Route::get('/transaction/payment/process', 'TransactionController@confirmPaymentProcess');

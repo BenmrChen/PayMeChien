@@ -36,7 +36,8 @@
       <button type="submit">註冊</button>
     </form>
   </div>
-  @include('components.socialButtons')
+
+{{--  @include('components.socialButtons')--}}
 
   @endsection
 
