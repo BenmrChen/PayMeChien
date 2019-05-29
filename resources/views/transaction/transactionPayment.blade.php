@@ -40,8 +40,6 @@
         {{ $TransactionPaginate->links() }}
 
         <form action="/transaction/payment/process" method="get">
-
-
             應付總金額為: {{ $total_amount }}<br>
             應匯入銀行帳號: 1234567890<br>
             付款帳戶後5碼: <input type="text" name="payment_number" placeholder="請填入您的匯款帳戶後5碼">

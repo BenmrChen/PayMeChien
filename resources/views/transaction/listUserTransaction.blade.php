@@ -24,8 +24,6 @@
 {{--                $transaction_status == '未付款'--}}
 {{--            @endif--}}
             @foreach($TransactionPaginate as $Transaction)
-
-
                 <tr>
                     <td>
                         <a href="/service/{{ $Transaction->Service->id }}">
@@ -48,7 +46,8 @@
         </table>
 
         {{-- 分頁頁數按鈕--}}
-        {{ $TransactionPaginate->links() }}
+            {{ ($TransactionPaginate->links()) }}
+{{--        {{ dd(get_class_methods($TransactionPaginate)) }}--}}
         @endif
     </div>
 @endsection
