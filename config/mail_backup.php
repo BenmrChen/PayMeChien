@@ -1,5 +1,7 @@
 <?php
-return array(
+
+return [
+
     /*
     |--------------------------------------------------------------------------
     | Mail Driver
@@ -9,10 +11,13 @@ return array(
     | sending of e-mail. You may specify which one you're using throughout
     | your application here. By default, Laravel is setup for SMTP mail.
     |
-    | Supported: "smtp", "mail", "sendmail"
+    | Supported: "smtp", "sendmail", "mailgun", "mandrill", "ses",
+    |            "sparkpost", "postmark", "log", "array"
     |
     */
-    'driver' => 'smtp',
+
+    'driver' => env('MAIL_DRIVER', 'smtp'),
+
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Address
@@ -20,21 +25,25 @@ return array(
     |
     | Here you may provide the host address of the SMTP server used by your
     | applications. A default option is provided that is compatible with
-    | the Postmark mail service, which will provide reliable delivery.
+    | the Mailgun mail service which will provide reliable deliveries.
     |
     */
-    'host' => 'smtp.mailgun.org',
+
+    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Port
     |--------------------------------------------------------------------------
     |
-    | This is the SMTP port used by your application to delivery e-mails to
-    | users of your application. Like the host we have set this value to
-    | stay compatible with the Postmark e-mail application by default.
+    | This is the SMTP port used by your application to deliver e-mails to
+    | users of the application. Like the host we have set this value to
+    | stay compatible with the Mailgun e-mail application by default.
     |
     */
-    'port' => 587,
+
+    'port' => env('MAIL_PORT', 587),
+
     /*
     |--------------------------------------------------------------------------
     | Global "From" Address
@@ -45,7 +54,12 @@ return array(
     | used globally for all e-mails that are sent by your application.
     |
     */
-    'from' => array('address' => null, 'name' => null),
+
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
@@ -56,7 +70,9 @@ return array(
     | transport layer security protocol should provide great security.
     |
     */
-    'encryption' => 'tls',
+
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+
     /*
     |--------------------------------------------------------------------------
     | SMTP Server Username
@@ -67,18 +83,11 @@ return array(
     | connection. You may also set the "password" value below this one.
     |
     */
-    'username' => null,
-    /*
-    |--------------------------------------------------------------------------
-    | SMTP Server Password
-    |--------------------------------------------------------------------------
-    |
-    | Here you may set the password required by your SMTP server to send out
-    | messages from your application. This will be given to the server on
-    | connection so that the application will be able to send messages.
-    |
-    */
-    'password' => null,
+
+    'username' => env('MAIL_USERNAME'),
+
+    'password' => env('MAIL_PASSWORD'),
+
     /*
     |--------------------------------------------------------------------------
     | Sendmail System Path
@@ -89,16 +98,39 @@ return array(
     | been provided here, which will work well on most of your systems.
     |
     */
+
     'sendmail' => '/usr/sbin/sendmail -bs',
+
     /*
     |--------------------------------------------------------------------------
-    | Mail "Pretend"
+    | Markdown Mail Settings
     |--------------------------------------------------------------------------
     |
-    | When this option is enabled, e-mail will not actually be sent over the
-    | web and will instead be written to your application's logs files so
-    | you may inspect the message. This is great for local development.
+    | If you are using Markdown based email rendering, you may configure your
+    | theme and component paths here, allowing you to customize the design
+    | of the emails. Or, you may simply stick with the Laravel defaults!
     |
     */
-    'pretend' => false,
-);
+
+    'markdown' => [
+        'theme' => 'default',
+
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Log Channel
+    |--------------------------------------------------------------------------
+    |
+    | If you are using the "log" driver, you may specify the logging channel
+    | if you prefer to keep mail messages separate from other log entries
+    | for simpler reading. Otherwise, the default channel will be used.
+    |
+    */
+
+    'log_channel' => env('MAIL_LOG_CHANNEL'),
+
+];
