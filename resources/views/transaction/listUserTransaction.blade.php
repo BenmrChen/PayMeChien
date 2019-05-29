@@ -6,7 +6,9 @@
     <div class="container">
         <h1>{{ $title }}</h1>
         @include('components.validationErrorMessage')
-
+        @if( $total_amount == 0)
+            您沒有交易紀錄。
+        @else
         <table class="table" border = 1px solid black>
             <tr>
                 <th>商品名稱</th>
@@ -47,5 +49,6 @@
 
         {{-- 分頁頁數按鈕--}}
         {{ $TransactionPaginate->links() }}
+        @endif
     </div>
 @endsection

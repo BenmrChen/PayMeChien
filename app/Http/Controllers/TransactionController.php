@@ -23,7 +23,17 @@ class TransactionController extends Controller {
          $TransactionPaginate = Transaction::where('user_id', $user_id)
              ->OrderBy('created_at', 'desc')
              ->with('Service') //順便帶Service資料出來
-             ->paginate($row_per_page);
+             ->paginate($row_per_page)
+             ->all();
+
+        // 計算要付款的總金額
+        $total_amount = 0;
+        foreach ($TransactionPaginate as $Transaction) {
+            $total_amount = $total_amount + $Transaction->total_price;
+        }
+
+        // 把total_amount存入session
+        session()->put('total_amount', $total_amount);
 
         // 判斷是否已付款 並轉成字串
         $TransactionStatus = Transaction::where('user_id', $user_id)
@@ -32,17 +42,25 @@ class TransactionController extends Controller {
             ->paginate($row_per_page)
             ->first();
 
-//        if ($TransactionStatus->payment_status == 'F') {
-//            $payment_status = '未付款';
-//        } else
-//            $payment_status = '已付款';
+        if (isset($TransactionStatus)) {
+            if ($TransactionStatus->payment_status == 'F') {
+                $payment_status = '未付款';
+            } else
+                $payment_status = '已付款';
 
-         $binding = [
-            'title' => '交易紀錄',
-            'TransactionPaginate' => $TransactionPaginate,
-            'payment_status' => $TransactionStatus->payment_status,
-         ];
-
+            $binding = [
+                'title' => '交易紀錄',
+                'TransactionPaginate' => $TransactionPaginate,
+                'payment_status' => $TransactionStatus->payment_status,
+                'total_amount' => $total_amount,
+            ];
+        } else {
+            $binding = [
+                'title' => '交易紀錄',
+                'TransactionPaginate' => $TransactionPaginate,
+                'total_amount' => $total_amount,
+            ];
+        }
          return view('transaction.listUserTransaction', $binding);
     }
 
@@ -75,18 +93,28 @@ class TransactionController extends Controller {
                 ->with('Service') //順便帶Service資料出來
                 ->paginate($row_per_page)
                 ->first();
-            if ($TransactionStatus->payment_status == 'F') {
-                $payment_status = '未付款';
-            } else
-                $payment_status = '已付款';
+            if (isset($TransactionStatus)) {
+                if ($TransactionStatus->payment_status == 'F') {
+                    $payment_status = '未付款';
+                } else
+                    $payment_status = '已付款';
 
-            $binding = [
-                'title' => '付款',
-                'nickname' => $User->username,
-                'TransactionPaginate' => $TransactionPaginate,
-                'total_amount' => $total_amount,
-                'payment_status' => $payment_status,
-            ];
+                $binding = [
+                    'title' => '付款',
+                    'nickname' => $User->username,
+                    'TransactionPaginate' => $TransactionPaginate,
+                    'total_amount' => $total_amount,
+                    'payment_status' => $payment_status,
+                ];
+            } else {
+
+                $binding = [
+                    'title' => '付款',
+                    'nickname' => $User->username,
+                    'TransactionPaginate' => $TransactionPaginate,
+                    'total_amount' => $total_amount,
+                ];
+            }
             return view('transaction.transactionPayment', $binding);
         }
         else {
