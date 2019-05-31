@@ -9,20 +9,20 @@
 </head>
 <body>
   <header id="header">
-        @if(session()->has('user_id'))
-            <a href="/user/auth/sign-out">登出</a>
-            <a href="/">首頁</a>
-        @else
-            <a href="/user/auth/sign-in">登入</a>
-            <a href="/user/auth/sign-up">註冊</a>
-            <a href="/">首頁</a>
-        @endif
+{{--        @if(session()->has('user_id'))--}}
+{{--            <a href="/user/auth/sign-out">登出</a>--}}
+{{--            <a href="/">首頁</a>--}}
+{{--        @else--}}
+{{--            <a href="/user/auth/sign-in">登入</a>--}}
+{{--            <a href="/user/auth/sign-up">註冊</a>--}}
+{{--            <a href="/">首頁</a>--}}
+{{--        @endif--}}
     <div class="container">
       <nav>
         <div id="logo">
-          <a href="">
-            <img src="images/logo2.jpg" alt="logo" style="width: 30%">
-          </a>
+{{--          <a href="">--}}
+{{--            <img src="images/logo2.jpg" alt="logo" style="width: 30%">--}}
+{{--          </a>--}}
         </div>
       
         <ul class="nav" >

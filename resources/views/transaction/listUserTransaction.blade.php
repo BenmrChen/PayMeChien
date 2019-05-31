@@ -46,7 +46,7 @@
         </table>
 
         {{-- 分頁頁數按鈕--}}
-            {{ ($TransactionPaginate->links()) }}
+            {{  ($TransactionPaginate->links()) }}
 {{--        {{ dd(get_class_methods($TransactionPaginate)) }}--}}
         @endif
     </div>
