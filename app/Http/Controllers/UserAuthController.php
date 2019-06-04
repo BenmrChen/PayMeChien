@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendSignUpMailJob;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -74,17 +75,21 @@ class UserAuthController extends Controller {
 
         // 寄送註冊通知信
         $mail_binding = [
-          'nickname' => $input['nickname']
+          'nickname' => $input['nickname'],
+          'email' => $input['email'],
         ];
 
-        Mail::send('email.signUpEmailNotification', $mail_binding, function($mail) use ($input){
-          // 收件人
-          $mail->to($input['email']);
-          // 寄件人
-          $mail->from('PayMeChien@gmail.com');
-          // 郵件主旨
-          $mail->subject('恭喜您，已成功註冊「PayMeChien」');
-        });
+        // 派發註冊成功job
+        SendSignUpMailJob::dispatch($mail_binding);
+
+//        Mail::send('email.signUpEmailNotification', $mail_binding, function($mail) use ($input){
+//          // 收件人
+//          $mail->to($input['email']);
+//          // 寄件人
+//          $mail->from('PayMeChien@gmail.com');
+//          // 郵件主旨
+//          $mail->subject('恭喜您，已成功註冊「PayMeChien」');
+//        });
         $message = [
             'msg' => '恭喜您已成功註冊! 您將會收到一封確認郵件，謝謝。'];
         //重新導向到登入頁
