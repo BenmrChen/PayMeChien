@@ -14,6 +14,9 @@
 Route::get('/index_2', function () {
     return view('index_2');
 });
+
+Route::get('/test',"testController@test");
+
 Route::get('/index', function () {
     return view('index');
 });

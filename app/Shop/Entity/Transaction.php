@@ -31,4 +31,9 @@ class Transaction extends Model
     public function Service() {
         return $this->hasOne('App\Shop\Entity\Service', 'id', 'service_id');
     }
+
+    // 設定關聯資料 將Transaction model 和 User 做關聯
+    public function User() {
+        return $this->hasOne('App\Shop\Entity\User', 'id', 'user_id');
+    }
 }
