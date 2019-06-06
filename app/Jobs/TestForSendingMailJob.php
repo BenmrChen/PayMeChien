@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Mail;
 
 
-class SendAutoMailOfAskingForDebtJob implements ShouldQueue
+class TestForSendingMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -28,7 +28,7 @@ class SendAutoMailOfAskingForDebtJob implements ShouldQueue
     public function __construct(Transaction $TransactionCollection)
     {
 
-        $this->User = $TransactionCollection->User;
+//        $this->User = $TransactionCollection->User;
         $this->Transaction = $TransactionCollection;
     }
 
@@ -41,14 +41,14 @@ class SendAutoMailOfAskingForDebtJob implements ShouldQueue
     {
 
         $mail_binding = [
-            'User' => $this->User,
-            'Transaction' => $this->Transaction,
+            'User' => 'Test',
+            'Transaction' => 'Tester',
         ];
 
         Mail::send(
             'email.SendAutoMailOfAskingForDebt', $mail_binding, function($mail) use ($mail_binding)
         {
-            $mail->to($mail_binding['User']->email);
+            $mail->to('lazzybug0608@gmail.com');
             $mail->from('PayMeChien@gmail.com' );
             $mail->subject('「討債一點靈」貼心提醒');
         });

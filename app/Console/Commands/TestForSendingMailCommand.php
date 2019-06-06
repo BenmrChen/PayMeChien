@@ -2,15 +2,14 @@
 
 namespace App\Console\Commands;
 
-//require 'vendor/autoload.php';
 use App\Shop\Entity\Transaction;
 use App\Shop\Entity\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\jobs\SendAutoMailOfAskingForDebtJob;
+use App\jobs\TestForSendingMailJob;
 
 
-class SendAutoMailOfAskingForDebt extends Command
+class TestForSendingMailCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -18,7 +17,7 @@ class SendAutoMailOfAskingForDebt extends Command
      * @var string
      */
     // 指令名稱
-    protected $signature = 'shop:sendAutoMailOfAskingForDebt';
+    protected $signature = 'shop:testForSendingMail';
 
     /**
      * The console command description.
@@ -26,7 +25,7 @@ class SendAutoMailOfAskingForDebt extends Command
      * @var string
      */
     // 指令描述
-    protected $description = '[郵件]寄送討債郵件';
+    protected $description = '[郵件]測試寄送討債郵件';
 
     /**
      * Create a new command instance.
@@ -52,7 +51,7 @@ class SendAutoMailOfAskingForDebt extends Command
         $TransactionCollection = Transaction::where('payment_status', 'F')
             ->where('created_at', '<', $standardTime) // 條件: 把"今天減5天"和"訂閱日期"相比，若訂則日小於今天-5，則代表已經過了5天卻還沒付款
             ->with('User')
-            ->get();
+            ->first();
 //        dd($TransactionCollection[0]->User);
 //        foreach ($TransactionCollection as $TransactionCollectionA) {
 //            $user_id =$TransactionCollectionA->user_id;
@@ -61,11 +60,11 @@ class SendAutoMailOfAskingForDebt extends Command
 //        $user_id = $TransactionCollection[0]->user_id;
 //        $UserCollection = User::where('id', $user_id);
 //        $TransactionCollection = Transaction::first();
-//        SendAutoMailOfAskingForDebtJob::dispatch($TransactionCollection);
+        TestForSendingMailJob::dispatch($TransactionCollection);
 //        dd('123');
-        foreach ($TransactionCollection as $TransactionCollectionNew) {
-            SendAutoMailOfAskingForDebtJob::dispatch($TransactionCollectionNew);
-        }
+//        foreach ($TransactionCollection as $TransactionCollectionNew) {
+//            SendAutoMailOfAskingForDebtJob::dispatch($TransactionCollectionNew);
+//        }
 
     }
 }

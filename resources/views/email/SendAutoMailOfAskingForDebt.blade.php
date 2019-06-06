@@ -9,8 +9,9 @@
 </head>
 <body>
 
-<h1>恭喜 {{ $User->nickname }} </h1>
-<p>謝謝。</p>
+<h1>Hi {{ $User->nickname }}: </h1>
+<p>提醒您，您於 {{ $Transaction->created_at }}訂閱的 Spotify Premium 繳費已逾期。</p>
+<p>應繳金額為 {{ $Transaction->total_price }}，請盡速繳款，謝謝。</p>
 
 </body>
 </html>
