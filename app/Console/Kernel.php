@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('shop:sendAutoMailOfAskingForDebt')
-                  ->everyMinute();
+                  ->dailyAt('09:00');
     }
 
     /**
