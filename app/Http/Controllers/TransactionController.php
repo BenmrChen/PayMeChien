@@ -35,7 +35,6 @@ class TransactionController extends Controller {
         // 計算要付款的總金額
         $total_amount = 0;
         foreach ($TransactionPaginate as $Transaction) {
-            dd(get_class($Transaction));
             $total_amount = $total_amount + $Transaction->total_price;
         }
 
