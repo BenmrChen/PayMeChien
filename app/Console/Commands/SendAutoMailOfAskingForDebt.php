@@ -7,7 +7,7 @@ use App\Shop\Entity\Transaction;
 use App\Shop\Entity\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\jobs\SendAutoMailOfAskingForDebtJob;
+use App\Jobs\SendAutoMailOfAskingForDebtJob;
 
 
 class SendAutoMailOfAskingForDebt extends Command
