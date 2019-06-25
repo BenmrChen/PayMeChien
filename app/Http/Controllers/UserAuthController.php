@@ -130,7 +130,17 @@ class UserAuthController extends Controller {
                 ->withInput();
         }
 
-        $User = User::where('email', $input['email'])->firstOrFail();
+        $User = User::where('email', $input['email'])->first();
+
+        if (!isset($User)) {
+            $error_message = [
+                'msg' =>
+                    '帳號或密碼錯誤',
+            ];
+            return redirect('/user/auth/sign-in')
+                ->withErrors($error_message)
+                ->withInput();
+        }
 
         $is_password_correct = Hash::check($input['password'], $User->password);
 
