@@ -40,6 +40,7 @@ class UserAuthController extends Controller {
                 'required',
                 'max:150',
                 'email',
+                'unique:users,email'
             ],
         // 密碼
             'password'=>[
