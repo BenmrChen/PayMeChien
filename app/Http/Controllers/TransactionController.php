@@ -24,10 +24,12 @@ class TransactionController extends Controller {
              ->OrderBy('created_at', 'desc')
              ->with('Service') //順便帶Service資料出來
              ->paginate($row_per_page);
-//             ->all(); 這邊不能ALL出來是因為下面會傳到bunding後再傳到blade, 接著在blade那邊再用paginate的方法"links()"來取值出來
+//           ->all(); 這邊不能ALL出來是因為下面會傳到bunding後再傳到blade, 接著在blade那邊再用paginate的方法"links()"來取值出來
         // 如果這邊就all出來了 它就會變成一個array 那麼傳到blade就沒辦法再用links的方法惹，也就是說 如果在現階段還未要取值 而是後面還有一些語法(比如說後面是要用paginate的方法)的話 那就不能用ALL或get把值取出來
 //        所以 沒get出來就是query builder, 有的話就是model instance; 前者是class 後者是array (array是key和value組成，而這邊它的value是個class, 所以下面foreach ($TransactionPaginate as $Transaction)才有辦法用$Transaction->total_price取到屬性
-
+//            6/27補充:沒get出來是query builder，可以繼續使用query builder的鏈結語法(如where, orderBy...)，
+//        但，若get出來了就會是個符合「Illuminate\Database\Eloquent\Collection」的instance，所以它可以使用collection的鏈結語法
+//
 //        $links = $TransactionPaginate->links();
 //        $data = $TransactionPaginate->all();
 //        也是可以這樣子寫(等於是分兩段式) 就可以...了嗎?
