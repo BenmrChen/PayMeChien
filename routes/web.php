@@ -15,7 +15,8 @@ Route::get('/index_2', function () {
     return view('index_2');
 });
 
-Route::get('/test',"testController@test");
+Route::get('/test','testController@test');
+Route::post('/test','testController@testPost');
 
 Route::get('/index', function () {
     return view('index');
@@ -58,6 +59,12 @@ Route::group(['prefix' => 'service'], function () {
     // 服務清單檢視
     Route::get('/', "ServiceController@serviceListPage");
 
+    // 新增商品服務
+    Route::get('/create', "ServiceController@serviceCreateProcess");
+
+    // 服務管理清單檢視
+    Route::get('/manage', "ServiceController@serviceManageListPage");
+
     // 指定商品服務
     Route::group(['prefix' => '{service_id}'], function(){
        // 單品檢視
@@ -65,6 +72,12 @@ Route::group(['prefix' => 'service'], function () {
 
        // 購買服務單品
        Route::post('/buy', "ServiceController@serviceItemBuyProcess");
+
+       // 服務單品編輯頁面檢視
+       Route::get('/edit', "ServiceController@serviceItemEditPage");
+
+       // 服務單品資料修改
+       Route::post('/', "ServiceController@serviceItemUpdateProcess");
     });
 });
 
