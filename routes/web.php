@@ -77,7 +77,7 @@ Route::group(['prefix' => 'service'], function () {
        Route::get('/edit', "ServiceController@serviceItemEditPage");
 
        // 服務單品資料修改
-       Route::post('/', "ServiceController@serviceItemUpdateProcess");
+       Route::put('/', "ServiceController@serviceItemUpdateProcess");
     });
 });
 

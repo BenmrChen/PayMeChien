@@ -157,5 +157,39 @@ class ServiceController extends Controller
                 ->withinput();
         }
     }
-    
+
+    // 新增服務
+    public function serviceCreateProcess() {
+        // 建立服務基本資訊
+        $service_data= [
+          'status'       => 'C', // 服務建立中
+          'name'         => '',  // 服務名稱
+          'introduction' => '',  // 服務介紹
+          'price'        => '0', // 服務價格
+          'remain_count' => '0', // 服務剩餘數
+          'payment_method' => '轉帳',  // 付款方式
+          'payment_period' => '180' // 付款週期
+        ];
+        $Service = Service::create($service_data); // 在db建資料後專到$Service. 以利下面redirect時取出到URI
+
+        //  重新導向商品編輯頁
+        return redirect('/service/'.$Service->id.'/edit');
+    }
+
+    // 編輯服務
+    public function serviceItemEditPage($service_id) {
+        // 撈取服務資料
+        $Service = Service::findOrFail($service_id);
+
+        $binding = [
+          'title' => '編輯服務內容',
+          'Service' => $Service,
+        ];
+
+        return view('service.editService', $binding);
+    }
+
+    public function serviceItemUpdateProcess() {
+        return response('OK!');
+    }
 }
