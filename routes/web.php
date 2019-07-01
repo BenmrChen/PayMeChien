@@ -60,10 +60,12 @@ Route::group(['prefix' => 'service'], function () {
     Route::get('/', "ServiceController@serviceListPage");
 
     // 新增商品服務
-    Route::get('/create', "ServiceController@serviceCreateProcess");
+    Route::get('/create', "ServiceController@serviceCreateProcess")
+    ->middleware(['user.auth.admin']);
 
     // 服務管理清單檢視
-    Route::get('/manage', "ServiceController@serviceManageListPage");
+    Route::get('/manage', "ServiceController@serviceManageListPage")
+    ->middleware(['user.auth.admin']);
 
     // 指定商品服務
     Route::group(['prefix' => '{service_id}'], function(){
@@ -74,15 +76,19 @@ Route::group(['prefix' => 'service'], function () {
        Route::post('/buy', "ServiceController@serviceItemBuyProcess");
 
        // 服務單品編輯頁面檢視
-       Route::get('/edit', "ServiceController@serviceItemEditPage");
+       Route::get('/edit', "ServiceController@serviceItemEditPage")
+        ->middleware(['user.auth.admin']);
 
        // 服務單品資料修改
-       Route::put('/', "ServiceController@serviceItemUpdateProcess");
+       Route::put('/', "ServiceController@serviceItemUpdateProcess")
+        ->middleware(['user.auth.admin']);
     });
 });
 
 // 交易資料
 Route::get('/transaction', 'TransactionController@transactionListPage');
+
 // 付款確認
 Route::get('/transaction/payment', 'TransactionController@confirmPayment');
+
 Route::get('/transaction/payment/process', 'TransactionController@confirmPaymentProcess');
