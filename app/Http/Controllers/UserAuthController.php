@@ -27,7 +27,6 @@ class UserAuthController extends Controller {
     {
         // 接收輸入資料
         $input = request()->all();
-
         // 建立驗證規則
         $rules = [
         //  暱稱

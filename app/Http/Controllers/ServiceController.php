@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Test;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Shop\Entity\Service;
@@ -189,7 +190,43 @@ class ServiceController extends Controller
         return view('service.editService', $binding);
     }
 
-    public function serviceItemUpdateProcess() {
-        return response('OK!');
+    // 服務資料更新處理
+    public function serviceItemUpdateProcess($service_id, Test $request) {
+        $test = $request->validated(); // 注入 Test 這個 Request
+        // 留下被validate的資料
+//        $input = request()->all();
+//        dd($input);
+//        $rules = [
+//          'status' => [
+//              'required',
+//              'in:C,S'
+//          ],
+//          'name' => [
+//              'required',
+//          ],
+//          'price' => [
+//              'required',
+//              'integer',
+//              'min:0',
+//          ],
+//          'remain_count' => [
+//              'required',
+//              'integer',
+//              'min:0',
+//          ]
+//        ];
+//        $validator = Validator::make($input, $rules);
+//        if ($validator->fails()) {
+//            return redirect ('/service/'.$service_id.'/edit')
+//                ->withErrors($validator)
+//                ->withInput();
+//        }
+
+        // input拿進來的array有'_method'和'_token' 得手動移除
+//        unset($input['_method']);
+//        unset($input['_token']);
+        // 不用手動移了 因為用了Request+validate
+        Service::where('id', $service_id)->update($test);
+        return redirect ('/service/'.$service_id);
     }
 }
